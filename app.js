@@ -1,14 +1,6 @@
-$(document).ready(function(){
-
-$("input").keypress(function(e){
-		if(e.which == 13) {
-        	console.log(this.value)
-    	}        
-    });
-
-});
 
 
+/*--------Modelo-------------*/
 function Modelo (){
 	this.numero = this.generadorNum()
 }
@@ -40,43 +32,44 @@ Modelo.prototype.encuentraPicas = function(num) {
 }
 
 Modelo.prototype.picasYFijas = function(num){
-	return {fijas: this.encuentraFijas(num),
+	return {num: num,
+			fijas: this.encuentraFijas(num),
 			picas: this.encuentraPicas(num)- this.encuentraFijas(num) }
 }
 
-/*Falta definicion del Modelo
-Encontrar las picas y fijas
-Validaciones en el input que no sean iguales, que no existan >4 digitos
-Definir la vista
-*/
-
-/*Modelo juego 
-
-atributos {numero}
-comportamientos{
-
-constructor = asigna un numero nuevo con cifras diferentes
-
-generadorNum= generador del numero con cifras diferentes
-
-picasYFijas= devuelve el resultado de picas y fijas
-
-encuentraPicas
-
-encuentraFijas
-
-picas- fijas = picas 
-
-}
-
-
+/*
 Vista juego
 
 	planta los metodos de la vista, render de los resultados, alertas
-
-
 */
+function View(){}
 
+View.prototype.addColumn = function(picasyFijas){
+	$("#table").append("<tr><td>"+picasyFijas.num+"</td><td>"+picasyFijas.picas+"</td><td>"+picasyFijas.fijas+"</td></tr>")
+}
 
+View.prototype.showalert= function(){
+	$("span").css("color","red")
+}
+
+View.prototype.hidealert= function(){
+	$("span").css("color","black")
+}
+
+function Controller(model,view){
+	this.model= model
+	this.view= view	
+}
+
+$(document).ready(function(){
+
+	$("input").keypress(function(e){
+		if(e.which == 13) {
+        	console.log(this.value)
+        	$(this).val("")  
+    	} 
+
+    });
+});
 
 
