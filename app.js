@@ -1,22 +1,41 @@
 
+/*Utilitarios*/
+
+function Repiten(arr){
+	/*necesita obligatoriamente un arreglo para usar pop*/
+	var x= arr.pop()
+	if (arr.includes(x)){
+		return true
+	}
+	else if (arr.length <= 0){
+		return false
+	}
+	else{
+		return Repiten(arr)
+	}
+}
+
+
 
 /*--------Modelo-------------*/
 function Modelo (){
-	this.numero = this.generadorNum()
+	this.numero = this.generadorNum().toString()
+	
 }
 
 Modelo.prototype.generadorNum = function() {
 	var arr= ["0","1","2","3","4","5","6","7","8","9"]
-	var arr2=[]
+	var arr2= ""
 	for (var i = 0; i < 4; i++) {		
 		var indice = Math.floor(Math.random()*arr.length)
-		arr2.push(arr[indice])
+		arr2 =arr2 + arr[indice]+""
 		arr.splice(indice, 1)
 	}
 	return arr2
 } 
 
 Modelo.prototype.encuentraFijas = function (num) {
+	
 	var fijas=0
 	for (var i in num) {
      if ( num[i]===this.numero[i]) fijas++ 
@@ -26,12 +45,14 @@ Modelo.prototype.encuentraFijas = function (num) {
 }
 
 Modelo.prototype.encuentraPicas = function(num) {	
-  return this.numero.reduce(function(total, element ){  		
+	
+  return this.numero.split("").reduce(function(total, element ){  		
   	 	return num.includes(element) ? total+1 : total
   },0)
 }
 
 Modelo.prototype.picasYFijas = function(num){
+	
 	return {num: num,
 			fijas: this.encuentraFijas(num),
 			picas: this.encuentraPicas(num)- this.encuentraFijas(num) }
@@ -61,15 +82,29 @@ function Controller(model,view){
 	this.view= view	
 }
 
-$(document).ready(function(){
-
+Controller.prototype.init= function(){
+	controller= this
 	$("input").keypress(function(e){
-		if(e.which == 13) {
-        	console.log(this.value)
+		if(e.which == 13) {			
+        	if (this.value.toString().length !== 4 || Repiten(this.value.toString().split(""))){
+
+        		controller.view.showalert()
+        	}
+        	else{
+        		controller.view.hidealert()
+        		controller.view.addColumn(controller.model.picasYFijas(this.value.toString()))
+        	}
+
         	$(this).val("")  
     	} 
+    })
+}
 
-    });
+
+
+$(document).ready(function(){
+	juego= new Controller(new Modelo(), new View())
+	juego.init()
 });
 
 
