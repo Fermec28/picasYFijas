@@ -15,12 +15,16 @@ function Repiten(arr){
 	}
 }
 
-
-
 /*--------Modelo-------------*/
 function Modelo (){
 	this.numero = this.generadorNum().toString()
+	console.log(this.numero)
 	
+}
+
+Modelo.prototype.newNum = function(){
+	this.numero = this.generadorNum().toString()
+	console.log(this.numero)
 }
 
 Modelo.prototype.generadorNum = function() {
@@ -58,15 +62,19 @@ Modelo.prototype.picasYFijas = function(num){
 			picas: this.encuentraPicas(num)- this.encuentraFijas(num) }
 }
 
-/*
-Vista juego
-
-	planta los metodos de la vista, render de los resultados, alertas
-*/
+/*-----vista ---*/
 function View(){}
 
 View.prototype.addColumn = function(picasyFijas){
 	$("#table").append("<tr><td>"+picasyFijas.num+"</td><td>"+picasyFijas.picas+"</td><td>"+picasyFijas.fijas+"</td></tr>")
+}
+View.prototype.limpiaTabla = function(){
+
+	$("tr").remove()
+}
+
+View.prototype.showGameOver= function(){
+	$("#gameover").show()
 }
 
 View.prototype.showalert= function(){
@@ -77,6 +85,7 @@ View.prototype.hidealert= function(){
 	$("span").css("color","black")
 }
 
+/*--- Controlador ---*/
 function Controller(model,view){
 	this.model= model
 	this.view= view	
@@ -93,13 +102,21 @@ Controller.prototype.init= function(){
         	else{
         		controller.view.hidealert()
         		controller.view.addColumn(controller.model.picasYFijas(this.value.toString()))
+        		if(controller.model.picasYFijas(this.value.toString()).fijas == 4){
+        			controller.view.showGameOver()
+        		}
         	}
 
         	$(this).val("")  
     	} 
     })
-}
 
+    $("#button").on("click",function(){
+    	controller.view.limpiaTabla()
+    	controller.model.newNum()
+    	$("#gameover").hide()
+    })
+}
 
 
 $(document).ready(function(){

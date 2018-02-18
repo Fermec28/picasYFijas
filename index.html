@@ -4,16 +4,17 @@
 	<meta charset="utf-8">
 	<title>Picas y Fijas</title>
 	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+	<link rel="stylesheet" type="text/css" href="style.css">
 </head>
 <body>
-	<div class="container">
-		<div>
+	<div id="container">
+		<div class="center">
 			<h1>Picas y Fijas</h1>
 			<p>Ingresa <span>Cuatro dijitos diferentes </span> y oprime Enter</p>
 
 			<input type="number" name="numero" id="numero">
 
-			<table>
+			<table class="table">
 				<thead>
 					<th>Numero</th>
 					<th>Picas</th>
@@ -23,9 +24,18 @@
 					
 				</tbody>
 			</table>
-		</div>
-    		
+		</div>    		
     </div>
+
+
+    <div id= "gameover" >
+    	<div class="center message">
+			<h1 align="center">¡GANASTE!</h1>
+			<div id="button">Jugar Nuevamente</div>
+		</div>
+		
+
+	</div>
 
 <script
   src="http://code.jquery.com/jquery-3.3.1.min.js"
