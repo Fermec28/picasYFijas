@@ -70,7 +70,7 @@ View.prototype.addColumn = function(picasyFijas){
 }
 View.prototype.limpiaTabla = function(){
 
-	$("tr").remove()
+	$("tbody tr").remove()
 }
 
 View.prototype.showGameOver= function(){
